@@ -14,18 +14,18 @@ using namespace std;
 
 struct student//定义一个student结构体用来定义所有表中的数据
 {
-    char num[15];
-    char name[20];
-    char sex[10];
-    char age[30];
-    char grade[20];
-    char pnum[20];
-    char judge[15][15];
-    int judgeMax;
-    int judgeMin;
-    int max;
-    int min;
-    int sum;
+    char num[15];//学号
+    char name[20];//姓名
+    char sex[10];//性别
+    char age[30];//年龄
+    char grade[20];//班级
+    char pnum[20];//电话号码
+    char judge[15][15];//裁判
+    int judgeMax;//最高分
+    int judgeMin;//最低分
+    int max;//最高分下标
+    int min;//最低分下标
+    int sum;//和（平均分）
 };
 
 int main(int argc, const char * argv[])
@@ -37,13 +37,13 @@ int main(int argc, const char * argv[])
     FILE *a;//定义一个地址指针用于指向数据源文件
     FILE *b;//定义一个地址指针用于指向写入数据的文件
     b=fopen("/users/s20171105120/Desktop/Excel/test4.csv","w");//打开test4.csv文件用来后续文本写入
-    ifstream fin("/Users/s20171105120/Desktop/Excel/test3.csv");//打开test3.csv文件用来后续文本读取
+    ifstream fin("/Users/s20171105120/Desktop/Excel/test5.csv");//打开test3.csv文件用来后续文本读取
     string line;
     while (getline(fin, line))//逐行读取文本内容
     {
         n++;
     }
-    if ((a=fopen("/Users/s20171105120/Desktop/Excel/test3.csv","r"))==0)
+    if ((a=fopen("/Users/s20171105120/Desktop/Excel/test5.csv","r"))==0)
     {
         printf("Error opening source file.\n");//判断数据源文件是否存在且能否正常打开
     }
@@ -65,13 +65,14 @@ int main(int argc, const char * argv[])
                     s[i].min=j;//最小值下标
                 }
             }
-            s[i].sum=atoi(s[i].judge[0])+atoi(s[i].judge[1])+atoi(s[i].judge[2])+atoi(s[i].judge[3])+atoi(s[i].judge[4])-s[i].judgeMax-s[i].judgeMin;//对评委打分求和，把字符转为整形并运算
+            s[i].sum=(atoi(s[i].judge[0])+atoi(s[i].judge[1])+atoi(s[i].judge[2])+atoi(s[i].judge[3])+atoi(s[i].judge[4])-s[i].judgeMax-s[i].judgeMin)/3;//对评委打分求和，把字符转为整形并运算
             strcpy(s[i].judge[s[i].max],"MAX");//把最高分输出时用‘MAX’替换
             strcpy(s[i].judge[s[i].min],"MIN");//把最低分输出时用'MIN'替换
             if(i>=n)
             {
                 break;
-            }//文件读取结束直至最后一行
+            }
+            //文件读取结束直至最后一行
             i++;
         }
     }
@@ -84,8 +85,8 @@ int main(int argc, const char * argv[])
             }
             else
             {
-                printf("%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%d\n",s[i].num,s[i].name,s[i].sex,s[i].age,s[i].grade,s[i].pnum,s[i].judge[0],s[i].judge[1],s[i].judge[2],s[i].judge[3],s[i].judge[4],s[i].sum/3);//测试输出结果
-                fprintf(b,"%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%d\n",s[i].num,s[i].name,s[i].sex,s[i].age,s[i].grade,s[i].pnum,s[i].judge[0],s[i].judge[1],s[i].judge[2],s[i].judge[3],s[i].judge[4],s[i].sum/3);//除第一行外所有的数据输出
+                printf("%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%d\n",s[i].num,s[i].name,s[i].sex,s[i].age,s[i].grade,s[i].pnum,s[i].judge[0],s[i].judge[1],s[i].judge[2],s[i].judge[3],s[i].judge[4],s[i].sum);//测试输出结果
+                fprintf(b,"%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%d\n",s[i].num,s[i].name,s[i].sex,s[i].age,s[i].grade,s[i].pnum,s[i].judge[0],s[i].judge[1],s[i].judge[2],s[i].judge[3],s[i].judge[4],s[i].sum);//除第一行外所有的数据输出
             }
         }
     return 0;
